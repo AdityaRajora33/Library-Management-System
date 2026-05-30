@@ -120,7 +120,7 @@ The application features a modern dark-themed interface with:
 
 ## 👨‍💻 Developed By
 
-**[Your Name]** — B.Tech Software Engineering Project
+**[Aditya Rajora]** — B.Tech Software Engineering Project
 
----
-*Built with ❤️ using Python*
+
+

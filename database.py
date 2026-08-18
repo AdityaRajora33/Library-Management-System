@@ -1,6 +1,6 @@
 """
 Library Management System - Database Module
-=============================================
+
 Handles all SQLite database operations including CRUD for books,
 members, and transactions (issue/return).
 """
@@ -172,9 +172,7 @@ def get_book(book_id):
     return dict(row) if row else None
 
 
-# ─────────────────────────────────────────────
-#  MEMBER OPERATIONS
-# ─────────────────────────────────────────────
+
 
 def add_member(name, email, phone, address, member_type):
     """Add a new library member."""
@@ -241,9 +239,6 @@ def get_member(member_id):
     return dict(row) if row else None
 
 
-# ─────────────────────────────────────────────
-#  TRANSACTION OPERATIONS (Issue / Return)
-# ─────────────────────────────────────────────
 
 def issue_book(book_id, member_id):
     """Issue a book to a member."""
@@ -346,9 +341,6 @@ def get_all_transactions():
     return [dict(r) for r in rows]
 
 
-# ─────────────────────────────────────────────
-#  DASHBOARD / STATISTICS
-# ─────────────────────────────────────────────
 
 def get_dashboard_stats():
     """Get summary statistics for the dashboard."""

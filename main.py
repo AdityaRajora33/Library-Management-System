@@ -1,10 +1,5 @@
-"""
-╔══════════════════════════════════════════════════════════════╗
-║          LIBRARY MANAGEMENT SYSTEM  v2.0                     ║
-║          Python + Tkinter + SQLite                           ║
-║          College Project - Software Engineering              ║
-╚══════════════════════════════════════════════════════════════╝
 
+"""
 A comprehensive Library Management System with:
   • Dashboard with real-time statistics
   • Book Management (Add / Edit / Delete / Search)
@@ -19,10 +14,6 @@ from tkinter import ttk, messagebox, font as tkfont
 from datetime import datetime
 import database as db
 
-# ─────────────────────────────────────────────
-#  COLOR SCHEME & THEME CONFIGURATION
-#  Warm Beige & Brown Theme - Approachable UI
-# ─────────────────────────────────────────────
 COLORS = {
     "bg_main":       "#f5ebe0",       # Main background – warm cream
     "bg_sidebar":    "#4a2c2a",       # Sidebar background – dark espresso brown
@@ -58,10 +49,6 @@ FONT_SIDEBAR = ("Segoe UI", 12)
 FONT_STAT_NUMBER = ("Segoe UI", 28, "bold")
 FONT_STAT_LABEL = ("Segoe UI", 10)
 
-# ─────────────────────────────────────────────
-#  LOGIN CREDENTIALS
-#  Change these to update the application's login
-# ─────────────────────────────────────────────
 ADMIN_USERNAME = "admin"
 ADMIN_PASSWORD = "admin@123"
 
@@ -71,38 +58,34 @@ class LibraryApp(tk.Tk):
     def __init__(self):
         super().__init__()
 
-        # ── Window Setup ──
+    
         self.title("📚 Library Management System")
         self.geometry("1280x720")
         self.minsize(1100, 650)
         self.configure(bg=COLORS["bg_main"])
 
-        # Try to set icon (ignore if not available)
         try:
             self.iconbitmap(default="")
         except Exception:
             pass
 
-        # ── Initialize Database ──
+     
         db.initialize_database()
         db.insert_sample_data()
 
-        # ── Apply Custom Theme ──
+     
         self._setup_styles()
 
-        # ── Build Layout ──
+     
         self.current_page = None
         self.show_login_page()
 
-    # ─────────────────────────────────────────
-    #  THEME & STYLES
-    # ─────────────────────────────────────────
     def _setup_styles(self):
         """Configure ttk styles for the beige-brown theme."""
         self.style = ttk.Style(self)
         self.style.theme_use("clam")
 
-        # Treeview (table) styling
+       
         self.style.configure("Custom.Treeview",
                              background=COLORS["bg_card"],
                              foreground=COLORS["text_primary"],
@@ -119,16 +102,14 @@ class LibraryApp(tk.Tk):
                        background=[("selected", COLORS["accent"])],
                        foreground=[("selected", "#ffffff")])
 
-        # Scrollbar styling
+
         self.style.configure("Custom.Vertical.TScrollbar",
                              background=COLORS["border"],
                              troughcolor=COLORS["bg_card"],
                              borderwidth=0,
                              arrowsize=12)
 
-    # ─────────────────────────────────────────
-    #  SIDEBAR
-    # ─────────────────────────────────────────
+    
     def _build_sidebar(self):
         """Build the left sidebar navigation."""
         self.sidebar = tk.Frame(self, bg=COLORS["bg_sidebar"], width=240)
@@ -222,9 +203,7 @@ class LibraryApp(tk.Tk):
                 bar.configure(bg=COLORS["bg_sidebar"])
         self.current_page = label
 
-    # ─────────────────────────────────────────
-    #  MAIN CONTENT AREA
-    # ─────────────────────────────────────────
+
     def _build_main_area(self):
         """Build the main content area on the right."""
         self.main_area = tk.Frame(self, bg=COLORS["bg_main"])
@@ -235,9 +214,7 @@ class LibraryApp(tk.Tk):
         for widget in self.main_area.winfo_children():
             widget.destroy()
 
-    # ─────────────────────────────────────────
-    #  HELPER WIDGETS AND LOGIN
-    # ─────────────────────────────────────────
+
     def show_login_page(self):
         """Display the secure login page."""
         self.login_frame = tk.Frame(self, bg=COLORS["bg_main"])
@@ -413,9 +390,7 @@ class LibraryApp(tk.Tk):
 
         return tree
 
-    # ═══════════════════════════════════════════
-    #  PAGE: DASHBOARD
-    # ═══════════════════════════════════════════
+
     def show_dashboard(self):
         """Display the dashboard with statistics and recent activity."""
         self._clear_main()
@@ -470,9 +445,6 @@ class LibraryApp(tk.Tk):
                 txn["issue_date"], txn["due_date"], txn["status"]
             ), tags=(tag,))
 
-    # ═══════════════════════════════════════════
-    #  PAGE: BOOKS MANAGEMENT
-    # ═══════════════════════════════════════════
     def show_books(self):
         """Display the books management page."""
         self._clear_main()
@@ -956,9 +928,6 @@ class LibraryApp(tk.Tk):
             else:
                 messagebox.showerror("Error", msg)
 
-    # ═══════════════════════════════════════════
-    #  PAGE: ISSUE BOOK
-    # ═══════════════════════════════════════════
     def show_issue(self):
         """Display the issue book page."""
         self._clear_main()
@@ -1083,9 +1052,6 @@ class LibraryApp(tk.Tk):
         self._make_button(btn_frame, "📤 Issue Book", issue,
                           COLORS["accent_green"], width=18).pack()
 
-    # ═══════════════════════════════════════════
-    #  PAGE: RETURN BOOK
-    # ═══════════════════════════════════════════
     def show_return(self):
         """Display the return book page with overdue warnings."""
         self._clear_main()
@@ -1167,9 +1133,6 @@ class LibraryApp(tk.Tk):
         self._make_button(btn_frame, "📥 Return Selected Book", return_selected,
                           COLORS["accent_blue"], width=22).pack()
 
-    # ═══════════════════════════════════════════
-    #  PAGE: TRANSACTION HISTORY
-    # ═══════════════════════════════════════════
     def show_transactions(self):
         """Display all transactions."""
         self._clear_main()
@@ -1199,9 +1162,7 @@ class LibraryApp(tk.Tk):
                 txn["status"]
             ), tags=(tag,))
 
-    # ═══════════════════════════════════════════
-    #  PAGE: OVERDUE BOOKS
-    # ═══════════════════════════════════════════
+
     def show_overdue(self):
         """Display overdue books with return option."""
         self._clear_main()
@@ -1274,9 +1235,6 @@ class LibraryApp(tk.Tk):
                               COLORS["accent_red"], width=18).pack(side="right")
 
 
-# ─────────────────────────────────────────────
-#  APPLICATION ENTRY POINT
-# ─────────────────────────────────────────────
 if __name__ == "__main__":
     app = LibraryApp()
     app.mainloop()
